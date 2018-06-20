@@ -85,6 +85,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 }
 
+
+
 HomePage.propTypes = {
   loading: React.PropTypes.bool,
   error: React.PropTypes.oneOfType([
