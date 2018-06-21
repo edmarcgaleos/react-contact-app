@@ -4,7 +4,7 @@
 // about the code splitting business
 import { getAsyncInjectors } from './utils/asyncInjectors';
 import routesSaga from './routes/sagas';
-import servicesSaga from './containers/Dashboard/sagas';
+// import servicesSaga from './containers/Dashboard/sagas';
 
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
@@ -21,18 +21,18 @@ export default function createRoutes(store) {
   const routes = [
     {
       path: '/',
-      name: 'home',
+      name: 'contacts',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          import('containers/HomePage/reducer'),
-          import('containers/HomePage/sagas'),
-          import('containers/HomePage'),
+          import('containers/Contacts/reducer'),
+          import('containers/Contacts/sagas'),
+          import('containers/Contacts'),
         ]);
 
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('home', reducer.default);
+          injectReducer('contacts', reducer.default);
           injectSagas(sagas.default);
 
           renderRoute(component);
@@ -41,34 +41,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/features',
-      name: 'features',
-      getComponent(nextState, cb) {
-        import('containers/FeaturePage')
-          .then(loadModule(cb))
-          .catch(errorLoading);
-      },
-    }, {
-      path: '/dashboard',
-      name: 'dashboard',
+      path: '/',
+      name: 'contacts',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          import('containers/Dashboard/reducer'),
-          // import('containers/Dashboard/sagas'),
-          import('containers/Dashboard'),
+          import('containers/Contacts/reducer'),
+          import('containers/Contacts/sagas'),
+          import('containers/Contacts'),
         ]);
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([reducer, component]) => {
-          injectReducer('dashboard', reducer.default);
-          // injectSagas(sagas.default);
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('contacts', reducer.default);
+          injectSagas(sagas.default);
+
           renderRoute(component);
         });
 
         importModules.catch(errorLoading);
       },
-      saga: servicesSaga,
     }, {
       path: '*',
       name: 'notfound',
