@@ -53,6 +53,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
-
-
-/* eslint linebreak-style: ["error", "windows"]*/
