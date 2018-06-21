@@ -41,7 +41,8 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-
+      path: '/',
+      name: 'contacts',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
           import('containers/Contacts/reducer'),
@@ -54,13 +55,12 @@ export default function createRoutes(store) {
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('contacts', reducer.default);
           injectSagas(sagas.default);
-          
+
           renderRoute(component);
         });
 
         importModules.catch(errorLoading);
       },
-      
     }, {
       path: '*',
       name: 'notfound',
