@@ -7,8 +7,6 @@
 import React from 'react';
 // import styled from 'styled-components';
 
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import styled from 'styled-components';
 
 
@@ -23,16 +21,17 @@ const Wrapper = styled.div`
 
 class PageTitle extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { title } = this.props;
     return (
       <Wrapper>
-      {this.props.title}
-       </Wrapper>
+        {title}
+      </Wrapper>
     );
   }
 }
 
 PageTitle.propTypes = {
-
+  title: React.propTypes.string,
 };
 
 export default PageTitle;

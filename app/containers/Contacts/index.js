@@ -7,10 +7,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import makeSelectContacts from './selectors';
-import messages from './messages';
 import ContentWrapper from '../../components/ContentWrapper';
 import PageTitle from '../../components/PageTitle';
 
@@ -18,12 +16,12 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
   render() {
     const contacts = [
       {
-        name: "Jay"
+        name: 'Jay',
       },
       {
-        name: "Miming"
-      }
-    ]
+        name: 'Miming',
+      },
+    ];
     return (
       <ContentWrapper>
         <Helmet
@@ -32,8 +30,8 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
             { name: 'description', content: 'Contact List' },
           ]}
         />
-        <PageTitle 
-          title="Contacts" 
+        <PageTitle
+          title="Contacts"
         />
       </ContentWrapper>
     );
@@ -55,3 +53,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
+
+
+/* eslint linebreak-style: ["error", "windows"]*/

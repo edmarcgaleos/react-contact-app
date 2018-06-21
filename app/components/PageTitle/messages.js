@@ -11,3 +11,4 @@ export default defineMessages({
     defaultMessage: 'This is the PageTitle component !',
   },
 });
+/* eslint linebreak-style: ["error", "windows"]*/

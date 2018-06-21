@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -8,16 +7,20 @@ const Wrapper = styled.div`
   color: #fff;
 `;
 
-import messages from './messages';
 
 class BrandName extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { brand } = this.props;
     return (
       <Wrapper>
-          {this.props.brand}
+        {brand}
       </Wrapper>
     );
   }
 }
+
+BrandName.propTypes = {
+  brand: React.propTypes.string,
+};
 
 export default BrandName;

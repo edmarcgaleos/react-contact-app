@@ -1,8 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import A from './A';
-import BrandName from '../BrandName'
+import BrandName from '../BrandName';
 import NavBar from './NavBar';
 import HeaderLink from './HeaderLink';
 import messages from './messages';
