@@ -11,7 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import makeSelectContacts from './selectors';
 import messages from './messages';
-// import ContentWrapper from '../../components/ContentWrapper';
+import ContentWrapper from '../../components/ContentWrapper';
 import PageTitle from '../../components/PageTitle';
 
 export class Contacts extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -25,7 +25,7 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
       }
     ]
     return (
-      <div>
+      <ContentWrapper>
         <Helmet
           title="Contact List"
           meta={[
@@ -35,7 +35,7 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
         <PageTitle 
           title="Contacts" 
         />
-      </div>
+      </ContentWrapper>
     );
   }
 }
