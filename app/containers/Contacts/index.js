@@ -23,15 +23,24 @@ const ContactWrapper = styled.div`
 `;
 
 export class Contacts extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor() {
+    super();
+     this.state = [
+      {name: "John", number: 12345566, address: "Cebu City"},
+      {name: "Jay", number: 21123220, address: "Cebu City"},
+      {name: "Jude", number: 32321120, address: "Cebu City"},
+     ];
+  
+  }
   render() {
-    const contacts = [
-      {
-        name: 'Jay',
-      },
-      {
-        name: 'Miming',
-      },
-    ];
+    
+    for(i = 0; i < this.state.contacts.length; i++ ){
+      const name = contacts[i].name;
+      const number = contacts[i].number;
+      const address = contacts[i].address;
+
+    }
+    
     return (
       <ContentWrapper>
         <Helmet
@@ -45,10 +54,13 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
         />
         <ContactWrapper>
           <ContactList
-            name="John Doe"
-            number={12345}
-            address="Cebu City"
+          
+            name = {name}
+            number = {number}
+            address = {address}
           />
+          
+        
         </ContactWrapper>
       </ContentWrapper>
     );
