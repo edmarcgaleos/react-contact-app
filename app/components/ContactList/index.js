@@ -19,7 +19,7 @@ const ContactListWrapper = styled.div`
   display: flex;
   flex-direction: row;
   box-shadow: 2px 5px 6px rgba(0,0,0,0.16);
-
+  margin-bottom: 3px;
   .contact-img {
     width:20%;
     display: flex;
@@ -65,11 +65,12 @@ const ContactListWrapper = styled.div`
 
 class ContactList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { name } = this.props;
-    const { number } = this.props;
-    const { address } = this.props;
+    const { name, number, address, alert } = this.props;
     return (
       <ContactListWrapper>
+        <div>
+          {alert}
+        </div>
         <div className="contact-img">
           <div className="img-holder">
           Image

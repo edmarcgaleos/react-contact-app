@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const ContentWrapper = styled.div`
   max-width: calc(100vw - 25%);
   min-width: calc(100vw - 25%);
-  min-height: calc(100vh - 10rem);
+  min-height: calc(100vh - 7.5rem);
   margin: 0 auto;
   margin-top: 20px;
   background-color: #FEFFFF;
