@@ -7,7 +7,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
+import button from '../Button';
+import { Contacts } from '../../containers/Contacts';
 
 const Wrapper = styled.div`
   font-size: 2rem;
@@ -19,11 +20,19 @@ const Wrapper = styled.div`
 `;
 
 class PageTitle extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
   render() {
-    const { title } = this.props;
+    const { title, openModal } = this.props;
+
     return (
       <Wrapper>
         {title}
+        <div className="modalButton">
+          <button onClick={openModal}>
+            Add Contact
+            </button>
+        </div>
+        
       </Wrapper>
     );
   }

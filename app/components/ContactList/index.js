@@ -11,18 +11,21 @@ import PropTypes from 'prop-types';
 const ContactListWrapper = styled.div`
   margin:0 auto;
   padding: 10px;
-  background-color: #222; 
-  border: .1px solid gray;
-  color: #FFFF;
+  background-color: #FFF; 
+  color: #000;
   font-family: 'Droid Sans', sans-serif;
   font-size: 30px;
   width: 100%;
   display: flex;
   flex-direction: row;
-
+  box-shadow: 2px 5px 6px rgba(0,0,0,0.16);
+  margin-bottom: 3px;
   .contact-img {
-    background-color:gray;
     width:20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
       .img-holder{
         text-align: center;
 
@@ -30,30 +33,44 @@ const ContactListWrapper = styled.div`
   }
 
   .contact-details {
-    background-color: green;
+    
     width:80%;
 
-  }
-  .contact-info {
-    display: flex;
-    background-color: red;
-    justify-content: space-around;
+    .contact-name {
+      margin: 10px 0px 10px 10px;
+      color: #3AAFA9;
+      font-size: 2.5rem;
+  
+    }
+    .contact-info {
+      display: flex;
+  
+      .number {
+        width: 50%;
+        margin: 10px;
+    
+      }
+      .address {
+        width: 50%;
+        margin: 10px;
+      }
+  
+    }
 
   }
-  .contact-name {
-    flex-grow:1;
-
-  }
+  
+  
   
 `;
 
 class ContactList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { name } = this.props;
-    const { number } = this.props;
-    const { address } = this.props;
+    const { name, number, address, alert } = this.props;
     return (
       <ContactListWrapper>
+        <div>
+          {alert}
+        </div>
         <div className="contact-img">
           <div className="img-holder">
           Image
