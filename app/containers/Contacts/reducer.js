@@ -9,7 +9,11 @@ import {
   DEFAULT_ACTION,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  people: {
+    name: 'edmarc',
+  },
+});
 
 function contactsReducer(state = initialState, action) {
   switch (action.type) {
