@@ -7,8 +7,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import button from '../Button';
-import { Contacts } from '../../containers/Contacts';
 
 const Wrapper = styled.div`
   font-size: 2rem;
@@ -32,7 +30,7 @@ class PageTitle extends React.Component { // eslint-disable-line react/prefer-st
             Add Contact
             </button>
         </div>
-        
+
       </Wrapper>
     );
   }
