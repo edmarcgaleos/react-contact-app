@@ -15,7 +15,13 @@ import ContentWrapper from '../../components/ContentWrapper';
 import PageTitle from '../../components/PageTitle';
 import ContactList from '../../components/ContactList';
 import AddContact from '../../components/AddContact';
-import { openModalAction, addContactAction, changeName } from './actions';
+import { openModalAction,
+  addContactAction,
+  changeName,
+  changeNumber,
+  changeAddress,
+  // errorAddContactAction
+} from './actions';
 
 
 const ContactWrapper = styled.div`
@@ -23,9 +29,7 @@ const ContactWrapper = styled.div`
   overflow-y: auto;
   height: calc(100vh - 13rem);
 `;
-
-export class Contacts extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function  
-
+export class Contacts extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     const { persons, showModal, name, number, address } = this.props.contacts;
     console.log(persons);
@@ -34,13 +38,12 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
     if (persons.length === 0) {
       mapContacts =
         <ContactList alert="No Contacts Available." />;
-      return mapContacts;
     } else {
-      mapContacts = persons.map((persons) => <ContactList
-        name={persons.name}
-        number={persons.number}
-        address={persons.address}
-        key={persons.id}
+      mapContacts = persons.map((person, index) => <ContactList
+        name={person.name}
+        number={person.number}
+        address={person.address}
+        key={index}
       />);
     }
     const title = 'Contacts';
@@ -63,7 +66,8 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
           <ReactModal
             isOpen={showModal}
             contentLabel="Style Modal"
-            style={{ overlay: { backgroundColor: 'rgba(0,0,0,.2)' }, content: { color: 'lightsteelblue' } }}
+            style={{ overlay: { backgroundColor: 'rgba(0,0,0,.2)' },
+              content: { color: 'lightsteelblue' } }}
             onRequestClose={this.closeModal}
             shouldCloseOnOverlayClick={false}
             ariaHideApp={false}
@@ -71,13 +75,16 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
             <button onClick={this.props.openModalClick(showModal)}>
                 Close
               </button>
-            <AddContact 
-              addContact = {this.props.addContactClick(name, number, address)}
-              onChangeName = {this.props.onChangeName}
-              name = {name}
+            <AddContact
+              addContact={this.props.addContactClick(name, number, address)}
+              onChangeName={this.props.onChangeName}
+              onChangeNumber={this.props.onChangeNumber}
+              onChangeAddress={this.props.onChangeAddress}
+              name={name}
+              number={number}
+              address={address}
             />
           </ReactModal>
-
         </ContactWrapper>
       </ContentWrapper>
     );
@@ -85,7 +92,7 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
 }
 
 Contacts.propTypes = {
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -94,22 +101,38 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    openModalClick: (value) => () =>{
-      dispatch(openModalAction(!value))
+    openModalClick: (value) => () => {
+      dispatch(openModalAction(!value));
     },
-    addContactClick: (name, number, address) => () =>{
+    addContactClick: (name, number, address) => () => {
       const newContact = {
         name,
         number,
-        address
-      }
-      dispatch(addContactAction(newContact))
+        address,
+      };
+      dispatch(addContactAction(newContact));
     },
-    onChangeName: (event) =>{
-      const name = event.target.value
-      dispatch(changeName(name))
+    onChangeName: (event) => {
+      const name = event.target.value;
+      dispatch(changeName(name));
     },
-    dispatch
+    onChangeNumber: (event) => {
+      const number = event.target.value;
+      dispatch(changeNumber(number));
+    },
+    onChangeAddress: (event) => {
+      const address = event.target.value;
+      dispatch(changeAddress(address));
+    },
+    // // duplicateError: (error) => {
+    // //   const duplicate = persons.map((person) => {
+    // //   name=person.name});
+
+    // //   console.log('Duplicate Error' , duplicate.name);
+
+    //   dispatch(errorAddContactAction(error));
+    // },
+    dispatch,
   };
 }
 

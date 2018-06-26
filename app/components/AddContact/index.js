@@ -7,6 +7,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
+import PropTypes from 'prop-types';
 
 const addContactWrapper = styled.div`
   background-color: blue;
@@ -20,31 +21,49 @@ const addContactWrapper = styled.div`
 class AddContact extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   render() {
-    const { 
+    const {
       name,
-      // number,
-      // address,
+      number,
+      address,
       addContact,
-      onChangeName } = this.props;
+      onChangeName,
+      onChangeNumber,
+      onChangeAddress } = this.props;
     return (
       <addContactWrapper>
         <p> Add Contact Person</p>
         <form>
           <div>
-            Name: 
-            <input 
-              placeholder='Name'
+            Name:
+            <input
+              type="text"
+              placeholder="Name.."
               value={name}
-              onChange={onChangeName} 
-              className="input-name" 
+              onChange={onChangeName}
+              className="input-name"
+              maxLength={30}
             />
           </div>
-          {/* <div>
-            Number: <input placeholder='Number' value={number} onChange={onChange} className="input-number" />
+          <div>
+            Number:
+            <input
+              placeholder="Number.."
+              value={number}
+              onChange={onChangeNumber}
+              className="input-number"
+              maxLength={20}
+            />
           </div>
           <div>
-            Address: <input placeholder='Address' value={address} onChange={onChange} className="input-address" />
-          </div> */}
+            Address:
+            <input
+              placeholder="Address.."
+              value={address}
+              onChange={onChangeAddress}
+              className="input-address"
+              maxLength={30}
+            />
+          </div>
           <Button className="addButton" onClick={addContact}>
           Add
         </Button>
@@ -55,7 +74,10 @@ class AddContact extends React.Component { // eslint-disable-line react/prefer-s
 }
 
 AddContact.propTypes = {
-
+  name: PropTypes.string,
+  number: PropTypes.string,
+  address: PropTypes.string,
+  addContact: PropTypes.func,
 };
 
 export default AddContact;
