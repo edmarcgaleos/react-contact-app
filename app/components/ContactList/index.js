@@ -32,15 +32,20 @@ const ContactListWrapper = styled.div`
       }
   }
 
+  .contact-alert {
+    display: flex;
+    text-align: center;
+  }
+
   .contact-details {
     
     width:80%;
-
+    
     .contact-name {
       margin: 10px 0px 10px 10px;
       color: #3AAFA9;
       font-size: 2.5rem;
-  
+      
     }
     .contact-info {
       display: flex;
@@ -66,14 +71,16 @@ const ContactListWrapper = styled.div`
 class ContactList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     const { name, number, address, alert } = this.props;
+
     return (
       <ContactListWrapper>
-        <div>
+        <div className="contact-alert">
           {alert}
         </div>
+
         <div className="contact-img">
           <div className="img-holder">
-          Image
+
           </div>
         </div>
         <div className="contact-details">
@@ -98,8 +105,9 @@ ContactList.propTypes = {
 
 ContactList.propTypes = {
   name: PropTypes.string,
-  number: PropTypes.number,
+  number: PropTypes.string,
   address: PropTypes.string,
+  alert: PropTypes.string,
 };
 
 export default ContactList;
