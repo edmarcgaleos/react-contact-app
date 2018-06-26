@@ -20,20 +20,32 @@ const addContactWrapper = styled.div`
 class AddContact extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   render() {
+    const { 
+      name,
+      // number,
+      // address,
+      addContact,
+      onChangeName } = this.props;
     return (
       <addContactWrapper>
         <p> Add Contact Person</p>
         <form>
           <div>
-            Name: <input type="text" value={this.value} className="input-name" max={30} />
+            Name: 
+            <input 
+              placeholder='Name'
+              value={name}
+              onChange={onChangeName} 
+              className="input-name" 
+            />
+          </div>
+          {/* <div>
+            Number: <input placeholder='Number' value={number} onChange={onChange} className="input-number" />
           </div>
           <div>
-            number: <input type="text" value={this.value} className="input-number" />
-          </div>
-          <div>
-            Address: <input type="text" value={this.value} className="input-address" />
-          </div>
-          <Button className="addButton">
+            Address: <input placeholder='Address' value={address} onChange={onChange} className="input-address" />
+          </div> */}
+          <Button className="addButton" onClick={addContact}>
           Add
         </Button>
         </form>

@@ -15,6 +15,7 @@ import ContentWrapper from '../../components/ContentWrapper';
 import PageTitle from '../../components/PageTitle';
 import ContactList from '../../components/ContactList';
 import AddContact from '../../components/AddContact';
+import { openModalAction, addContactAction, changeName } from './actions';
 
 
 const ContactWrapper = styled.div`
@@ -23,57 +24,27 @@ const ContactWrapper = styled.div`
   height: calc(100vh - 13rem);
 `;
 
-export class Contacts extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  constructor() {
-    super();
-    this.state = {
-      contacts: [
-        { id: 1, name: 'John Doe', number: 123124, address: 'Cebu City' },
-        { id: 2, name: 'John Doe', number: 123124, address: 'Cebu City' },
-        { id: 3, name: 'John Doe', number: 123124, address: 'Cebu City' },
-        { id: 4, name: 'John Doe', number: 123124, address: 'Cebu City' },
-        { id: 5, name: 'John Doe', number: 123124, address: 'Cebu City' },
-
-      ],
-      showModal: false,
-      name: '',
-      number: '',
-      address: '',
-    };
-
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-  }
-
-  componentWillMount() {
-    console.log('will mount: ', this.props);
-  }
-
-  openModal() {
-    this.setState({ showModal: true });
-  }
-  closeModal() {
-    this.setState({ showModal: false });
-  }
+export class Contacts extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function  
 
   render() {
-    const { people } = this.props.Contacts;
+    const { persons, showModal, name, number, address } = this.props.contacts;
+    console.log(persons);
     let mapContacts = {};
 
-    if (this.state.contacts.length === 0) {
+    if (persons.length === 0) {
       mapContacts =
         <ContactList alert="No Contacts Available." />;
       return mapContacts;
     } else {
-      mapContacts = this.state.contacts.map((contact) => <ContactList
-        name={contact.name}
-        number={contact.number}
-        address={contact.address}
-        key={contact.id}
+      mapContacts = persons.map((persons) => <ContactList
+        name={persons.name}
+        number={persons.number}
+        address={persons.address}
+        key={persons.id}
       />);
     }
     const title = 'Contacts';
-    console.log(people.name);
+
     return (
       <ContentWrapper>
         <Helmet
@@ -84,22 +55,27 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
         />
         <PageTitle
           title={title}
-          openModal={this.openModal}
+          openModal={this.props.openModalClick(showModal)}
         />
 
         <ContactWrapper>
           {mapContacts}
           <ReactModal
-            isOpen={this.state.showModal}
+            isOpen={showModal}
             contentLabel="Style Modal"
             style={{ overlay: { backgroundColor: 'rgba(0,0,0,.2)' }, content: { color: 'lightsteelblue' } }}
             onRequestClose={this.closeModal}
             shouldCloseOnOverlayClick={false}
+            ariaHideApp={false}
           >
-            <button onClick={this.closeModal}>
+            <button onClick={this.props.openModalClick(showModal)}>
                 Close
               </button>
-            <AddContact />
+            <AddContact 
+              addContact = {this.props.addContactClick(name, number, address)}
+              onChangeName = {this.props.onChangeName}
+              name = {name}
+            />
           </ReactModal>
 
         </ContactWrapper>
@@ -109,16 +85,31 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
 }
 
 Contacts.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func
 };
 
 const mapStateToProps = createStructuredSelector({
-  Contacts: makeSelectContacts(),
+  contacts: makeSelectContacts(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    openModalClick: (value) => () =>{
+      dispatch(openModalAction(!value))
+    },
+    addContactClick: (name, number, address) => () =>{
+      const newContact = {
+        name,
+        number,
+        address
+      }
+      dispatch(addContactAction(newContact))
+    },
+    onChangeName: (event) =>{
+      const name = event.target.value
+      dispatch(changeName(name))
+    },
+    dispatch
   };
 }
 
