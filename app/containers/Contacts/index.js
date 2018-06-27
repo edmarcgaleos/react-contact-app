@@ -52,15 +52,14 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
         <ContactList alert="No Contacts Available." />;
     } else {
       mapContacts = persons.map((person, index) => <ContactList
-        alert={""}
+        alert={''}
         name={person.name}
         number={person.number}
         address={person.address}
         key={index}
         id={index}
-        updateButton = {this.props.openUpdateModalClick(showUpdateModal, person, index)}
+        updateButton={this.props.openUpdateModalClick(showUpdateModal, person, index)}
       />);
-     
     }
     const title = 'Contacts';
     return (
@@ -76,52 +75,53 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
           openModal={this.props.openModalClick(showModal)}
         />
         <ReactModal
-            isOpen={showModal}
+          isOpen={showModal}
+          contentLabel="Style Modal"
+          style={{ overlay: { backgroundColor: 'rgba(0,0,0,.2)' },
+            content: { color: 'lightsteelblue' } }}
+          onRequestClose={this.closeModal}
+          shouldCloseOnOverlayClick={false}
+          ariaHideApp={false}
+        >
+          <button onClick={this.props.openModalClick(showModal)}>
+                Close
+              </button>
+          <AddContact
+            addContact={this.props.addContactClick(name, number, address)}
+            onChangeName={this.props.onChangeName}
+            onChangeNumber={this.props.onChangeNumber}
+            onChangeAddress={this.props.onChangeAddress}
+            name={name}
+            number={number}
+            address={address}
+          />
+
+        </ReactModal>
+
+        <ContactWrapper>
+          {mapContacts}
+          <ReactModal
+            isOpen={showUpdateModal}
             contentLabel="Style Modal"
             style={{ overlay: { backgroundColor: 'rgba(0,0,0,.2)' },
-            content: { color: 'lightsteelblue' } }}
+              content: { color: 'lightsteelblue' } }}
             onRequestClose={this.closeModal}
             shouldCloseOnOverlayClick={false}
             ariaHideApp={false}
           >
-            <button onClick={this.props.openModalClick(showModal)}>
-                Close
-              </button>
-            <AddContact
-              addContact={this.props.addContactClick(name, number, address)}
-              onChangeName={this.props.onChangeName}
-              onChangeNumber={this.props.onChangeNumber}
-              onChangeAddress={this.props.onChangeAddress}
-              name={name}
-              number={number}
-              address={address}
-            />
-          
-          </ReactModal>
-
-        <ContactWrapper>
-           {mapContacts}
-          <ReactModal
-              isOpen={showUpdateModal}
-              contentLabel="Style Modal"
-              style={{ overlay: { backgroundColor: 'rgba(0,0,0,.2)' },
-                content: { color: 'lightsteelblue' } }}
-              onRequestClose={this.closeModal}
-              shouldCloseOnOverlayClick={false}
-              ariaHideApp={false}
-            >
             <button onClick={this.props.openUpdateModalClick(showUpdateModal)}>
                   Close
                 </button>
-              <UpdateContacts
-                id = {id} 
-                name = {name}
-                number = {number}
-                address = {address}
-                updateName = {this.props.onChangeName}
-                updateNumber={this.props.onChangeNumber}
-                updateAddress={this.props.onChangeAddress}
-              />
+            <UpdateContacts
+              id={id}
+              name={name}
+              number={number}
+              address={address}
+              updateName={this.props.onChangeName}
+              updateNumber={this.props.onChangeNumber}
+              updateAddress={this.props.onChangeAddress}
+              updateContact={this.props.updateContactClick(id, name, number, address)}
+            />
           </ReactModal>
         </ContactWrapper>
       </ContentWrapper>
@@ -143,9 +143,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(openModalAction(!value));
     },
     openUpdateModalClick: (value, person, index) => () => {
-      console.log('Modal Value' + value)
-      console.log('ContactIndex: ' + index)
-      console.log('ContactPerson ' + person)
+      console.log(`Modal Value${value}`);
+      console.log(`ContactIndex: ${index}`);
+      console.log(`ContactPerson ${person}`);
       dispatch(openUpdateModalAction(!value));
       dispatch(editIndex(index));
       dispatch(editPerson(person));
@@ -158,13 +158,18 @@ function mapDispatchToProps(dispatch) {
       };
       dispatch(addContactAction(newContact));
     },
-    updateContactClick: (name, number, address) => () => {   
-      const updateContact = {
+    updateContactClick: (id, name, number, address) => () => {
+      const updatedContact = {
+        id,
         name,
         number,
-        addres,
+        address,
       };
-      dispatch(updateEditContact(updateContact));
+      dispatch(updateEditedContact(updatedContact));
+    },
+    onChangeName: (event) => {
+      const name = event.target.value;
+      dispatch(changeName(name));
     },
     onChangeNumber: (event) => {
       const number = event.target.value;
@@ -174,8 +179,6 @@ function mapDispatchToProps(dispatch) {
       const address = event.target.value;
       dispatch(changeAddress(address));
     },
-
-
 
 
     //  duplicateError: (error) => {

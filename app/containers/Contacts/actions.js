@@ -79,9 +79,9 @@ export function errorAddContactAction(err) {
     err,
   };
 }
-export function updateEditedContact(newContact) {
+export function updateEditedContact(updatedContact) {
   return {
     type: UPDATE_CONTACT,
-    newContact,
+    updatedContact,
   };
 }

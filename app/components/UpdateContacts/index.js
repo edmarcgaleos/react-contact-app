@@ -18,13 +18,13 @@ class UpdateContacts extends React.Component { // eslint-disable-line react/pref
       name,
       number,
       address,
-      // updateContact,
+      updateContact,
       updateName,
       updateNumber,
       updateAddress } = this.props;
     return (
       <updateContactWrapper>
-      <p> Update Contact Person</p>
+        <p> Update Contact Person</p>
         <form>
           <div>
             Index: {id}
@@ -57,7 +57,7 @@ class UpdateContacts extends React.Component { // eslint-disable-line react/pref
               maxLength={30}
             />
           </div>
-          <Button className="updateButton">
+          <Button className="updateButton" onClick={updateContact}>
           Update
         </Button>
         </form>
