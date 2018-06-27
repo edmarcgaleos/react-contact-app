@@ -6,8 +6,9 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../Button';
 import PropTypes from 'prop-types';
+import Button from '../Button';
+
 
 const addContactWrapper = styled.div`
   margin: 10px;
@@ -28,6 +29,7 @@ class AddContact extends React.Component { // eslint-disable-line react/prefer-s
       onChangeName,
       onChangeNumber,
       onChangeAddress } = this.props;
+
     return (
       <addContactWrapper>
         <p> Add Contact Person</p>

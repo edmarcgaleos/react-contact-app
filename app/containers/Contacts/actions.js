@@ -16,6 +16,7 @@ import {
   ERROR_ADD_CONTACT,
   EDIT_INDEX,
   EDIT_PERSON,
+  DELETE_CONTACT,
 } from './constants';
 
 
@@ -79,9 +80,16 @@ export function errorAddContactAction(err) {
     err,
   };
 }
-export function updateEditedContact(updatedContact) {
+export function updateEditedContact(persons) {
   return {
     type: UPDATE_CONTACT,
-    updatedContact,
+    persons,
+  };
+}
+
+export function deleteContact(persons) {
+  return {
+    type: DELETE_CONTACT,
+    persons,
   };
 }

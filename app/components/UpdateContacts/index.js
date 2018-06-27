@@ -21,7 +21,8 @@ class UpdateContacts extends React.Component { // eslint-disable-line react/pref
       updateContact,
       updateName,
       updateNumber,
-      updateAddress } = this.props;
+      updateAddress,
+    } = this.props;
     return (
       <updateContactWrapper>
         <p> Update Contact Person</p>

@@ -1,8 +1,8 @@
 /*
- *
- * Contacts
- *
- */
+*
+* Contacts
+*
+*/
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
@@ -16,15 +16,16 @@ import PageTitle from '../../components/PageTitle';
 import ContactList from '../../components/ContactList';
 import AddContact from '../../components/AddContact';
 import { openModalAction,
-  openUpdateModalAction,
-  addContactAction,
-  changeName,
-  changeNumber,
-  changeAddress,
-  editIndex,
-  editPerson,
-  updateEditedContact,
-  // errorAddContactAction
+    openUpdateModalAction,
+    addContactAction,
+    changeName,
+    changeNumber,
+    changeAddress,
+    editIndex,
+    editPerson,
+    updateEditedContact,
+    deleteContact,
+    // errorAddContactAction
 } from './actions';
 import UpdateContacts from '../../components/UpdateContacts';
 
@@ -36,15 +37,33 @@ const ContactWrapper = styled.div`
 `;
 
 export class Contacts extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.updateButton = this.updateButton.bind(this);
+  }
+  updateButton(id, name, number, address, persons) {
+    const updatedContact = {
+      name,
+      number,
+      address,
+    };
+  for (let i = 0; i < persons.length; i++) { //eslint-disable-line
+    if (i === id) {
+      persons[i] = updatedContact; //eslint-disable-line
+    }
+  }
+    this.props.updateContactClick(persons);
+  }
   render() {
-    const { persons,
+    const {
+      persons,
       showModal,
       id,
       showUpdateModal,
       name,
       number,
-      address } = this.props.contacts;
-    console.log(persons);
+      address,
+    } = this.props.contacts;
     let mapContacts = {};
 
     if (persons.length === 0) {
@@ -61,13 +80,14 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
         updateButton={this.props.openUpdateModalClick(showUpdateModal, person, index)}
       />);
     }
+
     const title = 'Contacts';
     return (
       <ContentWrapper>
         <Helmet
           title="Contact List"
           meta={[
-            { name: 'description', content: 'Contact List' },
+          { name: 'description', content: 'Contact List' },
           ]}
         />
         <PageTitle
@@ -84,8 +104,8 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
           ariaHideApp={false}
         >
           <button onClick={this.props.openModalClick(showModal)}>
-                Close
-              </button>
+              Close
+            </button>
           <AddContact
             addContact={this.props.addContactClick(name, number, address)}
             onChangeName={this.props.onChangeName}
@@ -105,13 +125,12 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
             contentLabel="Style Modal"
             style={{ overlay: { backgroundColor: 'rgba(0,0,0,.2)' },
               content: { color: 'lightsteelblue' } }}
-            onRequestClose={this.closeModal}
             shouldCloseOnOverlayClick={false}
             ariaHideApp={false}
           >
             <button onClick={this.props.openUpdateModalClick(showUpdateModal)}>
-                  Close
-                </button>
+                Close
+              </button>
             <UpdateContacts
               id={id}
               name={name}
@@ -120,7 +139,7 @@ export class Contacts extends React.PureComponent { // eslint-disable-line react
               updateName={this.props.onChangeName}
               updateNumber={this.props.onChangeNumber}
               updateAddress={this.props.onChangeAddress}
-              updateContact={this.props.updateContactClick(id, name, number, address)}
+              updateContact={() => this.updateButton(id, name, number, address, persons)}
             />
           </ReactModal>
         </ContactWrapper>
@@ -143,9 +162,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(openModalAction(!value));
     },
     openUpdateModalClick: (value, person, index) => () => {
-      console.log(`Modal Value${value}`);
-      console.log(`ContactIndex: ${index}`);
-      console.log(`ContactPerson ${person}`);
       dispatch(openUpdateModalAction(!value));
       dispatch(editIndex(index));
       dispatch(editPerson(person));
@@ -158,14 +174,11 @@ function mapDispatchToProps(dispatch) {
       };
       dispatch(addContactAction(newContact));
     },
-    updateContactClick: (id, name, number, address) => () => {
-      const updatedContact = {
-        id,
-        name,
-        number,
-        address,
-      };
-      dispatch(updateEditedContact(updatedContact));
+    updateContactClick: (persons) => {
+      dispatch(updateEditedContact(persons));
+    },
+    deleteContactClick: (delPersons) => {
+      dispatch(deleteContact(delPersons));
     },
     onChangeName: (event) => {
       const name = event.target.value;
@@ -179,15 +192,6 @@ function mapDispatchToProps(dispatch) {
       const address = event.target.value;
       dispatch(changeAddress(address));
     },
-
-
-    //  duplicateError: (error) => {
-    //    const duplicate = persons.map((person) => {
-    //    name=person.name});
-    //    console.log('Duplicate Error' , duplicate.name);
-
-    //    dispatch(errorAddContactAction(error));
-    //  },
     dispatch,
   };
 }

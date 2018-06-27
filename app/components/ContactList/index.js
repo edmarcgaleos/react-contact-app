@@ -50,6 +50,9 @@ const ContactListWrapper = styled.div`
       }
       .contact-update-button {
         color: green;
+        .style-del-button{
+          color: red;
+        }
       }
     }
     .contact-info {
@@ -75,43 +78,48 @@ const ContactListWrapper = styled.div`
 
 class ContactList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { name, number, address, alert, updateButton, id} = this.props;
+    const { name, number, address, alert, updateButton, deleteButton, id } = this.props;
     return (
       <div>
-      {
+        {
         alert !== '' ? <ContactListWrapper>
-            <div className="contact-alert">
+          <div className="contact-alert">
             {alert}
-            </div>
-          </ContactListWrapper>
-        : <ContactListWrapper>
-        <div className="contact-img">
-          <div className="img-holder">
-
           </div>
-        </div>
-        <div className="contact-details">
-          <div className="contact-name-action">
-            <div className="contact-name">
-              {name}
+        </ContactListWrapper>
+        : <ContactListWrapper>
+          <div className="contact-img">
+            <div className="img-holder">
+
             </div>
-            <div className="contact-update-button">
-              <button onClick={updateButton}>
+          </div>
+          <div className="contact-details">
+            <div className="contact-name-action">
+              <div className="contact-name">
+                {name}
+              </div>
+              <div className="contact-update-button">
+                <button onClick={updateButton}>
                 Edit
                 </button>
+                <div className="style-del-button">
+                  <button onClick={deleteButton}>
+                Delete
+                </button>
+                </div>
+              </div>
+            </div>
+            <div className="contact-info">
+              <div className="number">
+                {number}</div>
+              <div className="address">
+                {address}</div>
             </div>
           </div>
-          <div className="contact-info">
-            <div className="number">
-              {number}</div>
-            <div className="address">
-              {address}</div>
-          </div>
-        </div>
-      </ContactListWrapper>
-      }  
+        </ContactListWrapper>
+      }
       </div>
-  );
+    );
   }
 }
 

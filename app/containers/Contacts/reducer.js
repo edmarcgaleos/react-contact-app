@@ -17,20 +17,11 @@ import {
   OPEN_UPDATE_MODAL,
   EDIT_INDEX,
   EDIT_PERSON,
+  ERROR_ADD_CONTACT,
 } from './constants';
 
 const initialState = fromJS({
   persons: [
-    {
-      name: 'Jay',
-      number: '123',
-      address: 'Ucma',
-    },
-    {
-      name: 'X',
-      number: '123',
-      address: 'Ucma',
-    },
   ],
 
   id: '',
@@ -39,7 +30,7 @@ const initialState = fromJS({
   address: '',
   showModal: false,
   showUpdateModal: false,
-  error: '',
+  alert: '',
 }
 );
 
@@ -54,11 +45,9 @@ function contactsReducer(state = initialState, action) {
       return state
         .set('showUpdateModal', action.value);
     case EDIT_INDEX:
-      console.log(`Xx: ${action.index}`);
       return state
           .set('id', action.index);
     case EDIT_PERSON:
-      console.log(`Xxx: ${action.person.address}`);
       return state
           .set('name', action.person.name)
           .set('number', action.person.number)
@@ -69,6 +58,9 @@ function contactsReducer(state = initialState, action) {
         .set('name', '')
         .set('number', '')
         .set('address', '');
+    case ERROR_ADD_CONTACT:
+      return state
+        .set('error', action.err);
     case ON_CHANGE_NAME:
       return state
         .set('name', action.name);
@@ -80,7 +72,7 @@ function contactsReducer(state = initialState, action) {
         .set('address', action.address);
     case UPDATE_CONTACT:
       return state
-      .updateIn(['persons'], (updateDetails) => updateDetails.push(action.updatedContact));
+        .set('persons', action.persons);
     case DELETE_CONTACT:
 
       return state;
