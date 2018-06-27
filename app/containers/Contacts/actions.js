@@ -87,9 +87,9 @@ export function updateEditedContact(persons) {
   };
 }
 
-export function deleteContact(persons) {
+export function deleteContact(delPerson) {
   return {
     type: DELETE_CONTACT,
-    persons,
+    delPerson,
   };
 }

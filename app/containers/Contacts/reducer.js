@@ -74,8 +74,8 @@ function contactsReducer(state = initialState, action) {
       return state
         .set('persons', action.persons);
     case DELETE_CONTACT:
-
-      return state;
+      return state
+      .set('persons', action.delPerson);
     default:
       return state;
   }
