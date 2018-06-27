@@ -38,14 +38,19 @@ const ContactListWrapper = styled.div`
   }
 
   .contact-details {
-    
     width:80%;
-    
-    .contact-name {
-      margin: 10px 0px 10px 10px;
-      color: #3AAFA9;
-      font-size: 2.5rem;
-      
+    .contact-name-action {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .contact-name {
+        margin: 10px 0px 10px 10px;
+        color: #3AAFA9;
+        font-size: 2.5rem;
+      }
+      .contact-update-button {
+        color: green;
+      }
     }
     .contact-info {
       display: flex;
@@ -70,22 +75,31 @@ const ContactListWrapper = styled.div`
 
 class ContactList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { name, number, address, alert } = this.props;
-
+    const { name, number, address, alert, updateButton, id} = this.props;
     return (
-      <ContactListWrapper>
-        <div className="contact-alert">
-          {alert}
-        </div>
-
+      <div>
+      {
+        alert !== '' ? <ContactListWrapper>
+            <div className="contact-alert">
+            {alert}
+            </div>
+          </ContactListWrapper>
+        : <ContactListWrapper>
         <div className="contact-img">
           <div className="img-holder">
 
           </div>
         </div>
         <div className="contact-details">
-          <div className="contact-name">
-            {name}
+          <div className="contact-name-action">
+            <div className="contact-name">
+              {name}
+            </div>
+            <div className="contact-update-button">
+              <button onClick={updateButton}>
+                Edit
+                </button>
+            </div>
           </div>
           <div className="contact-info">
             <div className="number">
@@ -95,7 +109,9 @@ class ContactList extends React.Component { // eslint-disable-line react/prefer-
           </div>
         </div>
       </ContactListWrapper>
-    );
+      }  
+      </div>
+  );
   }
 }
 

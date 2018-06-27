@@ -10,7 +10,6 @@ import Button from '../Button';
 import PropTypes from 'prop-types';
 
 const addContactWrapper = styled.div`
-  background-color: blue;
   margin: 10px;
 
   input.input-name[type=text] {
